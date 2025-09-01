@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bamboo"
+version = "0.1.0"
+description = "Panda!"
+requires-python = ">=3.9"
+
+[tool.setuptools]
+packages = ["bamboo", "bamboo.transports"]
+
+[tool.setuptools.package-dir]
+"bamboo" = "protocol"
+"bamboo.transports" = "protocol/transports"
