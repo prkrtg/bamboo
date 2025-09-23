@@ -1,8 +1,31 @@
-
 from __future__ import annotations
-from typing import Optional, Tuple, Dict, Protocol
+from abc import ABC, abstractmethod
+from typing import Callable
 
-class Transport(Protocol):
-    peer_id: str
-    def send(self, dest: str, payload: bytes, headers: Dict[str, object]) -> None: ...
-    def recv(self, timeout: Optional[float] = None) -> Optional[Tuple[str, bytes, Dict[str, object]]]: ...
+DestStr = str   # "peer:<uuid>" or "group:<name>"
+SrcStr  = str   # "peer:<uuid>"
+
+class Transport(ABC):
+
+    @property
+    @abstractmethod
+    def mtu(self) -> int:
+        """Best-effort max frame size in bytes."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def start(self) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def stop(self) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def send(self, dest: DestStr, frame: bytes) -> None:
+        """Send one frame to a destination string."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def on_receive(self, cb: Callable[[SrcStr, bytes], None]) -> None:
+        raise NotImplementedError

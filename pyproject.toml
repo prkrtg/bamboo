@@ -9,8 +9,7 @@ description = "Panda!"
 requires-python = ">=3.9"
 
 [tool.setuptools]
-packages = ["bamboo", "bamboo.transports"]
+packages = ["bamboo"]
 
 [tool.setuptools.package-dir]
 "bamboo" = "protocol"
-"bamboo.transports" = "protocol/transports"
